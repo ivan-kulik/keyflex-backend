@@ -28,6 +28,7 @@ services:
       JWT_SECRET: ${JWT_SECRET}
       JWT_ACCESS_TOKEN_EXPIRATION: ${JWT_ACCESS_TOKEN_EXPIRATION}
       JWT_REFRESH_TOKEN_EXPIRATION: ${JWT_REFRESH_TOKEN_EXPIRATION}
+      JWT_TOKEN_TYPE: ${JWT_TOKEN_TYPE}
     depends_on:
       postgres:
         condition: service_healthy
