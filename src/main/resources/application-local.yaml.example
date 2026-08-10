@@ -28,3 +28,4 @@ jwt:
   secret: beccd90a1da85fb4b5250c83da4f5b97566cd50cf23f37f6110fcee6918ccfff
   access-token-expiration: 900000
   refresh-token-expiration: 604800000
+  token-type: Bearer
