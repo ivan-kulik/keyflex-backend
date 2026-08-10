@@ -81,12 +81,12 @@ public class JwtTokenManager {
                 !isTokenExpired(token);
     }
 
-    public boolean isAccessToken(String token, UserDetails userDetails) {
+    public boolean isAccessToken(String token) {
         return "ACCESS".equals(extractClaim(token, claims -> claims.get(
                         "type", String.class)));
     }
 
-    public boolean isRefreshToken(String token, UserDetails userDetails) {
+    public boolean isRefreshToken(String token) {
         return "REFRESH".equals(extractClaim(token, claims ->
                 claims.get("type", String.class)));
     }
