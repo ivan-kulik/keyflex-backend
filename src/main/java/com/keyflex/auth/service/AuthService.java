@@ -38,6 +38,7 @@ public class AuthService {
     private final JwtTokenManager jwtTokenManager;
     private final AuthenticationManager authManager;
     private final UserDetailsService userDetailsService;
+    private final EmailVerificationService emailVerificationService;
 
     @Value("${jwt.access-token-expiration}")
     private Long accessTokenExpirationMs;
@@ -65,6 +66,9 @@ public class AuthService {
                 .passwordHash(passwordEncoder.encode(request.password()))
                 .build();
         this.userRepository.save(user);
+
+        this.emailVerificationService.createAndSendVerificationToken(user);
+
         log.info("User registered successfully: {}", request.username());
     }
 
@@ -80,7 +84,7 @@ public class AuthService {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         User user = this.userRepository.findByUsername(userDetails.getUsername())
-                .orElseThrow(() -> new IllegalStateException("User disappeared"));
+                .orElseThrow(() -> new IllegalStateException("User not found."));
 
         if (!user.isEmailVerified()) {
             throw new BadRequestException("Email not verified. Please check your inbox.");
