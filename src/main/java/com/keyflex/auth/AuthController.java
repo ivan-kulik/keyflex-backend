@@ -6,14 +6,17 @@ import com.keyflex.auth.dto.request.RegisterRequest;
 import com.keyflex.auth.dto.response.ApiResponse;
 import com.keyflex.auth.dto.response.TokenResponse;
 import com.keyflex.auth.service.AuthService;
+import com.keyflex.auth.service.EmailVerificationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
+    private final EmailVerificationService emailVerificationService;
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<Void>> register(
@@ -30,8 +34,28 @@ public class AuthController {
         this.authService.register(request);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ApiResponse.success(
-                        "User registered successfully", null)
+                        "User registered successfully.", null)
                 );
+    }
+
+    @GetMapping("/verify-email")
+    public ResponseEntity<ApiResponse<Void>> verifyEmail(
+            @RequestParam String token
+    ) {
+        emailVerificationService.verifyEmail(token);
+        return ResponseEntity.ok(ApiResponse.success(
+                "Email verified successfully.", null)
+        );
+    }
+
+    @PostMapping("/resend-verification")
+    public ResponseEntity<ApiResponse<Void>> resendVerification(
+            @RequestParam String email
+    ) {
+        emailVerificationService.resendVerificationEmail(email);
+        return ResponseEntity.ok(ApiResponse.success(
+                "Verification email sent.", null)
+        );
     }
 
     @PostMapping("/login")
@@ -40,7 +64,7 @@ public class AuthController {
     ) {
         TokenResponse tokens = this.authService.login(request);
         return ResponseEntity.ok(ApiResponse.success(
-                "Login successful", tokens)
+                "Login successful.", tokens)
         );
     }
 
@@ -50,7 +74,7 @@ public class AuthController {
     ) {
         TokenResponse tokens = this.authService.refreshToken(request);
         return ResponseEntity.ok(ApiResponse.success(
-                "Token refreshed", tokens)
+                "Token refreshed.", tokens)
         );
     }
 
