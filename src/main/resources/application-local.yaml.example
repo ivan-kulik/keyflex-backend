@@ -23,3 +23,31 @@ spring:
   sql:
     init:
       mode: never
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: your_mail_username
+    password: your_mail_password
+    protocol: smtp
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+
+jwt:
+  secret: beccd90a1da85fb4b5250c83da4f5b97566cd50cf23f37f6110fcee6918ccfff
+  access-token-expiration: 900000
+  refresh-token-expiration: 604800000
+  token-type: Bearer
+
+app:
+  email-verification:
+    expiration-hours: 24
+    base-url: http://localhost:8080
