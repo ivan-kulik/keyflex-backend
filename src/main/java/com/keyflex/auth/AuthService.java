@@ -79,8 +79,14 @@ public class AuthService {
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-        this.userRepository.findByUsername(userDetails.getUsername())
-                .ifPresent(this.refreshTokenRepository::deleteByUser);
+        User user = this.userRepository.findByUsername(userDetails.getUsername())
+                .orElseThrow(() -> new IllegalStateException("User disappeared"));
+
+        if (!user.isEmailVerified()) {
+            throw new BadRequestException("Email not verified. Please check your inbox.");
+        }
+
+        this.refreshTokenRepository.deleteByUser(user);
 
         String accessToken = this.jwtTokenManager.generateAccessToken(userDetails);
         String refreshToken = createRefreshToken(userDetails);
