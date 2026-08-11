@@ -5,6 +5,7 @@ import com.keyflex.auth.dto.request.RefreshTokenRequest;
 import com.keyflex.auth.dto.request.RegisterRequest;
 import com.keyflex.auth.dto.response.ApiResponse;
 import com.keyflex.auth.dto.response.TokenResponse;
+import com.keyflex.auth.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

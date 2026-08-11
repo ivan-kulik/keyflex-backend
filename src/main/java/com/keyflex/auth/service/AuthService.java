@@ -1,4 +1,4 @@
-package com.keyflex.auth;
+package com.keyflex.auth.service;
 
 import com.keyflex.auth.dto.request.LoginRequest;
 import com.keyflex.auth.dto.request.RefreshTokenRequest;
