@@ -37,6 +37,7 @@ public class User {
     private String email;
 
     @Column(name = "email_verified", nullable = false)
+    @Builder.Default
     private boolean emailVerified = false;
 
     @Column(name = "avatar_url", length = 500)
