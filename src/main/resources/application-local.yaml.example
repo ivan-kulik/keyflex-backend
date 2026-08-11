@@ -46,3 +46,8 @@ jwt:
   access-token-expiration: 900000
   refresh-token-expiration: 604800000
   token-type: Bearer
+
+app:
+  email-verification:
+    expiration-hours: 24
+    base-url: http://localhost:8080
