@@ -3,7 +3,6 @@ package com.keyflex.common.security;
 import com.keyflex.user.entity.User;
 import com.keyflex.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,10 +26,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(
                         "User not found: " + login
                 ));
-
-        if (!user.isEmailVerified()) {
-            throw new DisabledException("Email not verified. Please check your inbox.");
-        }
 
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
